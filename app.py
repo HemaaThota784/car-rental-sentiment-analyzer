@@ -10,9 +10,9 @@ COHERE_API_KEY = os.getenv("COHERE_API_KEY")
 co = cohere.Client(COHERE_API_KEY)
 
 df = pd.read_csv("C:\\Users\\thema\\Downloads\\genai_carrental\\test_data (1).csv")
-
 df["Predicted Sentiment"] = ""
 df["Extracted Issues"] = ""
+
 def analyze_review(review_text):
     review_text = str(review_text)
     if review_text.strip() == "" or review_text.lower() == "nan":
@@ -37,12 +37,12 @@ Other Issues: <comma-separated list or 'None'>
         response = co.generate(
             model="command-r-plus",
             prompt=prompt,
-            max_tokens=200, # Increased max_tokens to allow for more detailed summaries
+            max_tokens=200, 
             temperature=0.3,
         )
         reply = response.generations[0].text.strip()
 
-        # Parse response
+        
         sentiment = "Unknown"
         issues = "None"
         for line in reply.splitlines():
@@ -70,9 +70,10 @@ output_file = "car_rental_sentiment_cohere_analysis.csv"
 df.to_csv(output_file, index=False)
 
 print(f"\n✅ All done! Results saved to: {output_file}")
+
+
 print("\n📋 Summary Report:")
 print("=" * 50)
-
 
 sentiment_counts = df["Predicted Sentiment"].value_counts()
 print("\n🟢 Sentiment Distribution:")
@@ -84,7 +85,6 @@ issues_list = df["Extracted Issues"].dropna().tolist()
 flat_issues = []
 for item in issues_list:
     if item.lower() != "none":
-        # Split by comma and clean up each issue
         flat_issues.extend([issue.strip().lower() for issue in item.split(",")])
 
 issue_counts = Counter(flat_issues)
