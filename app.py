@@ -72,11 +72,11 @@ df.to_csv(output_file, index=False)
 print(f"\n✅ All done! Results saved to: {output_file}")
 
 
-print("\n📋 Summary Report:")
+print("\nSummary Report:")
 print("=" * 50)
 
 sentiment_counts = df["Predicted Sentiment"].value_counts()
-print("\n🟢 Sentiment Distribution:")
+print("\nSentiment Distribution:")
 for sentiment, count in sentiment_counts.items():
     print(f" - {sentiment}: {count}")
 
@@ -88,7 +88,7 @@ for item in issues_list:
         flat_issues.extend([issue.strip().lower() for issue in item.split(",")])
 
 issue_counts = Counter(flat_issues)
-print("\n⚠ Most Common Other Issues (Top 5):")
+print("\nMost Common Other Issues (Top 5):")
 if issue_counts:
     for issue, count in issue_counts.most_common(5):
         print(f" - {issue}: {count}")
